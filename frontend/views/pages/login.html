@@ -9,8 +9,18 @@
 <body>
   <div class="login-container">
     <form class="login-box">
-      <input type="text" placeholder="username" class="input" />
-      <input type="password" placeholder="password" class="input" />
+      <input type="email" 
+             placeholder="Email" 
+             class="input"
+             pattern="^[A-Za-z0-9._%+-]+@(gmail\.com|yahoo\.com|yahoo\.in|outlook\.com)$"
+             title="Email must be valid and end with gmail.com, yahoo.com, yahoo.in, or outlook.com"
+             required />
+      <input type="password" 
+             placeholder="password" 
+             class="input"
+             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[.@#_]).{8,}$"
+             title="Password must be at least 8 characters, one number, and one special character (@, #, _)"
+             required />
       <button type="submit" class="login-btn">LOGIN</button>
       <p class="register-text">
         <a href="forgotpswd.html">Forgot Password? </a>
