@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Model - ModelMarket.AI</title>
+  <link rel="stylesheet" href="..\..\public\styles\styles.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .upload-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .file-upload {
+      border: 2px dashed var(--border);
+      padding: 2rem;
+      text-align: center;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .file-upload:hover {
+      border-color: var(--primary);
+      background-color: rgba(30, 64, 175, 0.05);
+    }
+    
+    .file-upload.active {
+      border-color: var(--primary);
+      background-color: rgba(30, 64, 175, 0.1);
+    }
+    
+    .file-upload input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    
+    .upload-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      color: var(--primary);
+    }
+    
+    .file-list {
+      margin-top: 2rem;
+    }
+    
+    .file-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      background-color: var(--muted);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+    }
+    
+    .file-item-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.75rem;
+      color: var(--muted-foreground);
+    }
+    
+    .file-item-name {
+      flex-grow: 1;
+      font-size: 0.875rem;
+    }
+    
+    .file-item-size {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-right: 0.75rem;
+    }
+    
+    .file-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      transition: color 0.2s ease;
+    }
+    
+    .file-item-remove:hover {
+      color: var(--destructive);
+    }
+    
+    .model-form {
+      margin-top: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+    }
+    
+    .form-submit {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    .form-submit:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .required-files {
+      background-color: #f8fafc;
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .required-files-title {
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .required-files-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .required-files-item {
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .required-files-item::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      margin-right: 0.75rem;
+      display: inline-block;
+    }
+
+    .file-status {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      margin-left: 0.5rem;
+    }
+
+    .status-pending {
+      background-color: #fef3c7;
+      color: #b45309;
+    }
+
+    .status-uploaded {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Navigation Bar -->
+    <nav class="dashboard-nav">
+      <div class="dashboard-nav-container">
+        <div class="dashboard-nav-logo">
+            <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
+        </div>
+        <div class="dashboard-nav-links">
+          <a href="dashboard.html" class="dashboard-nav-link">Models</a>
+          <a href="upload-model.html" class="dashboard-nav-link active">Publish Model</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <h1 class="dashboard-title">Publish Your AI Model</h1>
+      
+      <div class="upload-container">
+        <div class="required-files">
+          <h3 class="required-files-title">Required Files:</h3>
+          <ul class="required-files-list" id="requiredFilesList">
+            <li class="required-files-item" data-file="app.py">app.py <span class="file-status status-pending" id="status-app">Required</span></li>
+            <li class="required-files-item" data-file="model.pkl">model.pkl <span class="file-status status-pending" id="status-model">Required</span></li>
+            <li class="required-files-item" data-file="requirements.txt">requirements.txt <span class="file-status status-pending" id="status-requirements">Required</span></li>
+            <li class="required-files-item" data-file="README.md">README.md <span class="file-status status-pending" id="status-readme">Required</span></li>
+          </ul>
+        </div>
+        
+        <div class="file-upload" id="fileUpload">
+          <div class="upload-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </div>
+          <h3>Drag and drop files here</h3>
+          <p>or click to browse your files</p>
+          <input type="file" id="fileInput" multiple>
+        </div>
+        
+        <div class="file-list" id="fileList">
+          <!-- Files will be listed here -->
+        </div>
+        
+        <form class="model-form" id="modelForm">
+          <div class="form-group">
+            <label for="modelName" class="form-label">Model Name*</label>
+            <input type="text" id="modelName" class="form-input" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="modelDescription" class="form-label">Description*</label>
+            <textarea id="modelDescription" class="form-textarea" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="modelCategory" class="form-label">Category*</label>
+            <select id="modelCategory" class="form-input" required>
+              <option value="">Select a category</option>
+              <option value="computer-vision">Computer Vision</option>
+              <option value="nlp">Natural Language Processing</option>
+              <option value="reinforcement-learning">Reinforcement Learning</option>
+              <option value="generative-ai">Generative AI</option>
+              <option value="time-series">Time Series</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="modelTags" class="form-label">Tags (comma-separated)</label>
+            <input type="text" id="modelTags" class="form-input" placeholder="e.g. image-recognition, tensorflow, classification">
+          </div>
+          
+          <button type="submit" class="form-submit" id="publishButton" disabled>Publish Model</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fileUpload = document.getElementById('fileUpload');
+      const fileInput = document.getElementById('fileInput');
+      const fileList = document.getElementById('fileList');
+      const modelForm = document.getElementById('modelForm');
+      const publishButton = document.getElementById('publishButton');
+      
+      // Required files tracking
+      const requiredFiles = ['app.py', 'model.pkl', 'requirements.txt', 'README.md'];
+      const uploadedFiles = {};
+      
+      // Handle drag and drop events
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        fileUpload.addEventListener(eventName, preventDefaults, false);
+      });
+      
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
+      ['dragenter', 'dragover'].forEach(eventName => {
+        fileUpload.addEventListener(eventName, () => {
+          fileUpload.classList.add('active');
+        });
+      });
+      
+      ['dragleave', 'drop'].forEach(eventName => {
+        fileUpload.addEventListener(eventName, () => {
+          fileUpload.classList.remove('active');
+        });
+      });
+      
+      fileUpload.addEventListener('drop', handleDrop);
+      fileInput.addEventListener('change', handleFiles);
+      
+      function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles({ target: { files } });
+      }
+      
+      function handleFiles(e) {
+        const files = e.target.files;
+        Array.from(files).forEach(file => {
+          // Check if this is one of the required files
+          const fileName = file.name.toLowerCase();
+          const isRequired = requiredFiles.some(reqFile => 
+            fileName === reqFile.toLowerCase()
+          );
+          
+          // Store the file in our tracking object
+          uploadedFiles[fileName] = file;
+          
+          // Update the UI
+          addFileToList(file);
+          updateRequiredFilesStatus();
+          checkAllRequiredFilesUploaded();
+        });
+      }
+      
+      function addFileToList(file) {
+        const fileSize = formatFileSize(file.size);
+        const fileExtension = file.name.split('.').pop();
+        const isFileAlreadyAdded = document.querySelector(`[data-filename="${file.name}"]`);
+        
+        if (isFileAlreadyAdded) {
+          // Remove the existing entry before adding the new one
+          isFileAlreadyAdded.remove();
+        }
+        
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.setAttribute('data-filename', file.name);
+        
+        fileItem.innerHTML = `
+          <div class="file-item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+          </div>
+          <div class="file-item-name">${file.name}</div>
+          <div class="file-item-size">${fileSize}</div>
+          <button class="file-item-remove" data-filename="${file.name}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        `;
+        
+        fileList.appendChild(fileItem);
+        
+        // Add event listener to remove button
+        const removeButton = fileItem.querySelector('.file-item-remove');
+        removeButton.addEventListener('click', () => {
+          fileItem.remove();
+          delete uploadedFiles[file.name.toLowerCase()];
+          updateRequiredFilesStatus();
+          checkAllRequiredFilesUploaded();
+        });
+      }
+      
+      function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      }
+      
+      function updateRequiredFilesStatus() {
+        requiredFiles.forEach(fileName => {
+          const statusElement = document.getElementById(`status-${fileName.split('.')[0]}`);
+          if (uploadedFiles[fileName.toLowerCase()]) {
+            statusElement.textContent = 'Uploaded';
+            statusElement.className = 'file-status status-uploaded';
+          } else {
+            statusElement.textContent = 'Required';
+            statusElement.className = 'file-status status-pending';
+          }
+        });
+      }
+      
+      function checkAllRequiredFilesUploaded() {
+        const allUploaded = requiredFiles.every(file => 
+          uploadedFiles[file.toLowerCase()]
+        );
+        
+        publishButton.disabled = !allUploaded;
+      }
+      
+      // Handle form submission
+      modelForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // In a real application, you would use FormData to send files to server
+        const formData = new FormData();
+        
+        // Add model details
+        formData.append('name', document.getElementById('modelName').value);
+        formData.append('description', document.getElementById('modelDescription').value);
+        formData.append('category', document.getElementById('modelCategory').value);
+        formData.append('tags', document.getElementById('modelTags').value);
+        
+        // Add files
+        Object.keys(uploadedFiles).forEach(fileName => {
+          formData.append(fileName, uploadedFiles[fileName]);
+        });
+        
+        // Show success message (in a real app, you'd make an API call here)
+        showSuccessMessage();
+      });
+      
+      function showSuccessMessage() {
+        // Clear the form and file list
+        const uploadContainer = document.querySelector('.upload-container');
+        uploadContainer.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1rem;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background-color: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#065f46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 style="margin-bottom: 1rem; color: #065f46;">Model Successfully Published!</h2>
+            <p style="margin-bottom: 2rem; color: #374151;">Your model has been submitted for review. You'll receive a notification once it's approved.</p>
+            <div>
+              <a href="dashboard.html" class="form-submit" style="text-decoration: none; display: inline-block;">Return to Dashboard</a>
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

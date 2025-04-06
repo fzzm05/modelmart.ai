@@ -1,43 +1,344 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create a Website</title>
-  <link rel="stylesheet" href="../../public/styles/landing.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModelMarket.AI</title>
+  <link rel="stylesheet" href="..\..\public\styles\styles.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">AICandyShop</div>
-    <div class="auth">
-      <a class="btn" href="login.html">Log In</a>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1>Create a website<br />without limits</h1>
-        <p>Bring your vision to life with the website builder that gives you the tools you need to succeed.</p>
-        <a class="btn" href="#">Get Started</a>
-        <p class="note">Start for free. No credit card required.</p>
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
       </div>
-      
-      <div class="hero-images">
-        <div class="card">
-          <img src="..\..\public\images\122555.jpg" alt="Image 1" />
-          <p>Hollow</p>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#models" class="nav-link">Models</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#" class="nav-link">About</a>
+      </div>
+      <div class="nav-buttons">
+        <a href="login.html" class="button-outline">Log in</a>
+        <a href="signup.html" class="button-primary">Sign up</a>
+      </div>
+      <button class="mobile-menu-button" id="mobile-menu-button">
+        <span class="menu-icon"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-nav-links">
+        <a href="#features" class="mobile-nav-link">Features</a>
+        <a href="#models" class="mobile-nav-link">Models</a>
+        <a href="#pricing" class="mobile-nav-link">Pricing</a>
+        <a href="#" class="mobile-nav-link">About</a>
+      </div>
+      <div class="mobile-nav-buttons">
+        <button class="button-outline full-width">Log in</button>
+        <button class="button-primary full-width">Sign up</button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span>Discover and Deploy</span>
+          <span class="hero-title-blue">AI Models with Ease</span>
+        </h1>
+        <p class="hero-description">
+          The premier marketplace for discovering, comparing, and deploying state-of-the-art AI models.
+          Accelerate your AI journey with ModelMarket.AI.
+        </p>
+        <div class="hero-buttons">
+          <a href="signup.html" class="button-primary large">Get Started</a>
+          <a href="dashboard.html" class="button-outline large">Browse Models</a>
         </div>
-        <div class="card">
-          <img src="..\..\public\images\Naruto-naruto-3081f23a15-1440x900.jpg" alt="Image 2" />
-          <p>Itachi</p>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Features</span>
+        <h2 class="section-title">Everything you need for AI model deployment</h2>
+        <p class="section-description">
+          ModelMarket.AI provides a comprehensive platform for finding, comparing, and deploying AI models with enterprise-grade tools and support.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon check-icon"></div>
+          <h3 class="feature-title">Curated Model Selection</h3>
+          <p class="feature-description">Access to a wide range of carefully vetted AI models across different domains and use cases.</p>
         </div>
-        <div class="card">
-          <img src="..\..\public\images\The-Stars--stars-draw-1440x900.jpg" alt="Image 3" />
-          <p>Stars</p>
+        <div class="feature-card">
+          <div class="feature-icon zap-icon"></div>
+          <h3 class="feature-title">Easy Integration</h3>
+          <p class="feature-description">Simplified API integration and deployment options to get your models running in production quickly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon chart-icon"></div>
+          <h3 class="feature-title">Performance Metrics</h3>
+          <p class="feature-description">Comprehensive benchmarks and real-world performance data to help you choose the right model.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fingerprint-icon"></div>
+          <h3 class="feature-title">Secure & Private</h3>
+          <p class="feature-description">Enterprise-grade security and privacy features to protect your data and models.</p>
         </div>
       </div>
     </div>
   </section>
+
+  <section id="models">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Models</span>
+        <h2 class="section-title">Explore Popular AI Models</h2>
+        <p class="section-description">
+          Browse our collection of top-rated AI models across various categories, from computer vision to natural language processing.
+        </p>
+      </div>
+      <div class="models-grid">
+        <div class="model-card">
+          <div class="model-header">
+            <h3 class="model-title">GPT-4</h3>
+            <span class="model-badge">Popular</span>
+          </div>
+          <div class="model-rating">
+            <div class="stars">
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star half-filled"></span>
+            </div>
+            <span class="rating-text">4.5 (232 reviews)</span>
+          </div>
+          <p class="model-description">
+            Advanced language model for natural text generation, code completion, and complex reasoning tasks.
+          </p>
+          <div class="model-use-cases">
+            <p class="use-cases-title">Use Cases:</p>
+            <div class="use-cases-badges">
+              <span class="use-case-badge">Content Creation</span>
+              <span class="use-case-badge">Coding</span>
+              <span class="use-case-badge">Chatbots</span>
+              <span class="use-case-badge">Summarization</span>
+            </div>
+          </div>
+          <div class="model-actions">
+            <button class="button-outline small">View Details</button>
+            <button class="button-primary small">Try Now</button>
+          </div>
+        </div>
+        <div class="model-card">
+          <div class="model-header">
+            <h3 class="model-title">DALL-E 3</h3>
+            <span class="model-badge">New</span>
+          </div>
+          <div class="model-rating">
+            <div class="stars">
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star"></span>
+            </div>
+            <span class="rating-text">4.0 (178 reviews)</span>
+          </div>
+          <p class="model-description">
+            State-of-the-art image generation model capable of creating high-quality images from textual descriptions.
+          </p>
+          <div class="model-use-cases">
+            <p class="use-cases-title">Use Cases:</p>
+            <div class="use-cases-badges">
+              <span class="use-case-badge">Image Generation</span>
+              <span class="use-case-badge">Design</span>
+              <span class="use-case-badge">Advertising</span>
+              <span class="use-case-badge">Concept Art</span>
+            </div>
+          </div>
+          <div class="model-actions">
+            <button class="button-outline small">View Details</button>
+            <button class="button-primary small">Try Now</button>
+          </div>
+        </div>
+        <div class="model-card">
+          <div class="model-header">
+            <h3 class="model-title">Whisper</h3>
+            <span class="model-badge">Top Rated</span>
+          </div>
+          <div class="model-rating">
+            <div class="stars">
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+            </div>
+            <span class="rating-text">4.9 (145 reviews)</span>
+          </div>
+          <p class="model-description">
+            Robust speech recognition model that can transcribe audio from multiple languages and translate to English.
+          </p>
+          <div class="model-use-cases">
+            <p class="use-cases-title">Use Cases:</p>
+            <div class="use-cases-badges">
+              <span class="use-case-badge">Transcription</span>
+              <span class="use-case-badge">Translation</span>
+              <span class="use-case-badge">Accessibility</span>
+              <span class="use-case-badge">Video Captioning</span>
+            </div>
+          </div>
+          <div class="model-actions">
+            <button class="button-outline small">View Details</button>
+            <button class="button-primary small">Try Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="view-all-container">
+        <a href="dashboard.html" class="button-primary large">View All Models</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Pricing</span>
+        <h2 class="section-title">Plans for businesses of all sizes</h2>
+        <p class="section-description">
+          Choose the perfect plan for your needs. Start for free and scale as you grow.
+        </p>
+      </div>
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="pricing-card-header">
+            <span class="pricing-tier">Free</span>
+            <div class="pricing-price">$0</div>
+            <p class="pricing-description">
+              Perfect for exploring and experimenting with AI models.
+            </p>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li class="pricing-feature">Access to public models</li>
+              <li class="pricing-feature">Limited API calls</li>
+              <li class="pricing-feature">Community support</li>
+              <li class="pricing-feature">Basic analytics</li>
+            </ul>
+            <button class="button-outline pricing-button">Start for Free</button>
+          </div>
+        </div>
+        <div class="pricing-card highlighted">
+          <div class="pricing-card-header">
+            <span class="pricing-tier">Pro</span>
+            <div class="pricing-price">$49<span class="pricing-frequency">/month</span></div>
+            <p class="pricing-description">
+              For professionals and small teams building AI applications.
+            </p>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li class="pricing-feature">Everything in Free</li>
+              <li class="pricing-feature">Unlimited API calls</li>
+              <li class="pricing-feature">Priority support</li>
+              <li class="pricing-feature">Advanced analytics</li>
+              <li class="pricing-feature">Custom model deployment</li>
+            </ul>
+            <button class="button-primary pricing-button">Subscribe to Pro</button>
+          </div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-card-header">
+            <span class="pricing-tier">Enterprise</span>
+            <div class="pricing-price">Custom</div>
+            <p class="pricing-description">
+              For organizations with advanced needs and security requirements.
+            </p>
+          </div>
+          <div class="pricing-card-body">
+            <ul class="pricing-features">
+              <li class="pricing-feature">Everything in Pro</li>
+              <li class="pricing-feature">Dedicated support</li>
+              <li class="pricing-feature">SLA guarantees</li>
+              <li class="pricing-feature">Custom integrations</li>
+              <li class="pricing-feature">On-premise deployment options</li>
+              <li class="pricing-feature">SOC2 & HIPAA compliance</li>
+            </ul>
+            <button class="button-outline pricing-button">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta">
+    <div class="cta-container">
+      <h2 class="cta-title">
+        <span>Ready to get started?</span>
+        <span class="cta-subtitle">Join ModelMarket.AI today.</span>
+      </h2>
+      <div class="cta-buttons">
+        <a href="dashboard.html" class="button-white">Try Dashboard</a>
+        <button class="button-outline-white">Contact sales</button>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-container">
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h3 class="footer-column-title">Products</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">API Access</a></li>
+            <li><a href="#" class="footer-link">Model Marketplace</a></li>
+            <li><a href="#" class="footer-link">Inference Endpoints</a></li>
+            <li><a href="#" class="footer-link">Integration Tools</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-column-title">Resources</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Documentation</a></li>
+            <li><a href="#" class="footer-link">API Reference</a></li>
+            <li><a href="#" class="footer-link">Blog</a></li>
+            <li><a href="#" class="footer-link">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-column-title">Company</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">About</a></li>
+            <li><a href="#" class="footer-link">Careers</a></li>
+            <li><a href="#" class="footer-link">Press</a></li>
+            <li><a href="#" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3 class="footer-column-title">Newsletter</h3>
+          <p class="newsletter-description">
+            Subscribe to our newsletter for updates on new models, features, and AI industry insights.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" class="newsletter-input" required>
+            <button type="submit" class="newsletter-button">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">&copy; <span id="current-year">2025</span> ModelMarket.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="script.js"></script>
 </body>
 </html>

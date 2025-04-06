@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ModelMarket.AI</title>
+  <link rel="stylesheet" href="..\..\public\styles\styles.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Navigation Bar -->
+    <nav class="dashboard-nav">
+      <div class="dashboard-nav-container">
+        <div class="dashboard-nav-logo">
+          <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
+        </div>
+        <div class="dashboard-nav-links">
+          <a href="#models" class="dashboard-nav-link active">Models</a>
+          <a href="upload-model.html" class="dashboard-nav-link">Publish Model</a>
+        </div>
+        
+        <div class="dashboard-search">
+          <div class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="text" placeholder="Search Models" class="dashboard-search-input" id="modelSearch">
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <h1 class="dashboard-title">Most Popular Models</h1>
+      
+      <!-- Models Grid -->
+      <div class="dashboard-models-grid" id="modelsGrid">
+        <!-- Model cards will be dynamically populated here -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Sample model data
+    const models = [
+      {
+        id: 1,
+        provider: "IBM",
+        name: "IBM Data Science",
+        description: "Professional Certificate",
+        courseLink: "Build toward a degree",
+        image: "../../public/images/The-Stars--stars-draw-1440x900.jpg"
+      },
+      {
+        id: 2,
+        provider: "DeepLearning.AI",
+        name: "Deep Learning",
+        description: "Specialization",
+        courseLink: "Build toward a degree",
+        image: "../../public/images/122555.jpg"
+      },
+      {
+        id: 3,
+        provider: "IBM",
+        name: "IBM AI Engineering",
+        description: "Professional Certificate",
+        courseLink: "Build toward a degree",
+        image: "../../public/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+      },
+      {
+        id: 4,
+        provider: "IBM",
+        name: "IBM Generative AI Engineering",
+        description: "Professional Certificate",
+        courseLink: "Build toward a degree",
+        image: "../../public/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+      }
+    ];
+
+    // Render model cards
+    function renderModelCards() {
+      const grid = document.getElementById('modelsGrid');
+      grid.innerHTML = '';
+
+      const filteredModels = filterModels();
+      
+      filteredModels.forEach(model => {
+        const card = document.createElement('div');
+        card.className = 'dashboard-model-card';
+        
+        card.innerHTML = `
+          <div class="dashboard-model-image">
+            <img src="${model.image}" alt="${model.name}">
+          </div>
+          <div class="dashboard-model-content">
+            <p class="dashboard-model-provider">${model.provider}</p>
+            <h3 class="dashboard-model-title">${model.name}</h3>
+            <p class="dashboard-model-description">${model.description}</p>
+            <a href="#" class="dashboard-model-link">${model.courseLink}</a>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+
+    // Filter models based on search input
+    function filterModels() {
+      const searchTerm = document.getElementById('modelSearch').value.toLowerCase();
+      return models.filter(model => 
+        model.name.toLowerCase().includes(searchTerm) ||
+        model.provider.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      renderModelCards();
+      
+      // Add search functionality
+      document.getElementById('modelSearch').addEventListener('input', renderModelCards);
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
