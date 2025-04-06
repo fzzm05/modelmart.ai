@@ -10,12 +10,13 @@ router.get('/', isAuthenticated, (req, res) => {
 
 // Handle file upload
 router.post('/upload', isAuthenticated, upload, (req, res) => {
+    console.log(req.files);
     // Handle the uploaded files
     if (!req.files.model || !req.files.app) {
-        return res.status(400).send('Both files are required.');
+        return res.status(400).json({ error: 'Both files are required.' });
     }
     // Process the files...
-    res.send('Files uploaded successfully!');
+    res.json({ message: 'Files uploaded successfully!' });
 });
 
 router.get('/uploadmodel',isAuthenticated, (req, res) => {

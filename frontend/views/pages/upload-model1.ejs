@@ -220,47 +220,48 @@
       <h1 class="dashboard-title">Publish Your AI Model</h1>
       
       <div class="upload-container">
-        <div class="required-files">
-          <h3 class="required-files-title">Required Files:</h3>
-          <ul class="required-files-list" id="requiredFilesList">
-            <li class="required-files-item" data-file="app.py">app.py <span class="file-status status-pending" id="status-app">Required</span></li>
-            <li class="required-files-item" data-file="model.pkl">model.pkl <span class="file-status status-pending" id="status-model">Required</span></li>
-            <li class="required-files-item" data-file="requirements.txt">requirements.txt <span class="file-status status-pending" id="status-requirements">Required</span></li>
-            <li class="required-files-item" data-file="README.md">README.md <span class="file-status status-pending" id="status-readme">Required</span></li>
-          </ul>
-        </div>
-        
-        <div class="file-upload" id="fileUpload">
-          <div class="upload-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
+
+        <form class="model-form" id="modelForm" action="/dashboard/upload" method="POST" enctype="multipart/form-data">
+          <div class="required-files">
+            <h3 class="required-files-title">Required Files:</h3>
+            <ul class="required-files-list" id="requiredFilesList">
+              <li class="required-files-item" data-file="app.py">app.py <span class="file-status status-pending" id="status-app">Required</span></li>
+              <li class="required-files-item" data-file="model.pkl">model.pkl <span class="file-status status-pending" id="status-model">Required</span></li>
+              <li class="required-files-item" data-file="requirements.txt">requirements.txt <span class="file-status status-pending" id="status-requirements">Required</span></li>
+              <li class="required-files-item" data-file="README.md">README.md <span class="file-status status-pending" id="status-readme">Required</span></li>
+            </ul>
           </div>
-          <h3>Drag and drop files here</h3>
-          <p>or click to browse your files</p>
-          <input type="file" id="fileInput" multiple accept=".txt,.py,.pkl,.md">
-        </div>
-        
-        <div class="file-list" id="fileList">
-          <!-- Files will be listed here -->
-        </div>
-        
-        <form class="model-form" id="modelForm" action="/dashboard/upload" method="POST">
+          
+          <div class="file-upload" id="fileUpload">
+            <div class="upload-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <h3>Drag and drop files here</h3>
+            <p>or click to browse your files</p>
+            <input type="file" id="fileInput" name="files" multiple>
+          </div>
+          
+          <div class="file-list" id="fileList">
+            <!-- Files will be listed here -->
+          </div>
+          
           <div class="form-group">
             <label for="modelName" class="form-label">Model Name*</label>
-            <input type="text" id="modelName" class="form-input" required>
+            <input type="text" id="modelName" name="modelName" class="form-input" required>
           </div>
           
           <div class="form-group">
             <label for="modelDescription" class="form-label">Description*</label>
-            <textarea id="modelDescription" class="form-textarea" required></textarea>
+            <textarea id="modelDescription" name="modelDescription" class="form-textarea" required></textarea>
           </div>
           
           <div class="form-group">
             <label for="modelCategory" class="form-label">Category*</label>
-            <select id="modelCategory" class="form-input" required>
+            <select id="modelCategory" name="modelCategory" class="form-input" required>
               <option value="">Select a category</option>
               <option value="computer-vision">Computer Vision</option>
               <option value="nlp">Natural Language Processing</option>
@@ -273,7 +274,7 @@
           
           <div class="form-group">
             <label for="modelTags" class="form-label">Tags (comma-separated)</label>
-            <input type="text" id="modelTags" class="form-input" placeholder="e.g. image-recognition, tensorflow, classification">
+            <input type="text" id="modelTags" name="modelTags" class="form-input" placeholder="e.g. image-recognition, tensorflow, classification">
           </div>
           
           <button type="submit" class="form-submit" id="publishButton">Publish Model</button>
@@ -420,44 +421,65 @@
       modelForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const formData = new FormData();
+        const projectName = document.getElementById('modelName').value;
         
-        // Add model details
-        formData.append('projectName', document.getElementById('modelName').value);
-        formData.append('description', document.getElementById('modelDescription').value);
-        formData.append('category', document.getElementById('modelCategory').value);
-        formData.append('tags', document.getElementById('modelTags').value);
-        
-        // Add files
-        Object.keys(uploadedFiles).forEach(fileName => {
-          const fieldName = fileName.toLowerCase();
-          if (fieldName === 'model.pkl') {
-            formData.append('model', uploadedFiles[fileName]);
-          } else if (fieldName === 'app.py') {
-            formData.append('app', uploadedFiles[fileName]);
-          } else if (fieldName === 'requirements.txt') {
-            formData.append('requirements', uploadedFiles[fileName]);
-          }
-        });
-
         try {
+          // Check if project name is available before proceeding
+          await checkProjectNameAvailability(projectName);
+          
+          // Continue with your existing form submission logic
+          const formData = new FormData();
+          
+          // Add model details
+          formData.append('projectName', projectName);
+          formData.append('description', document.getElementById('modelDescription').value);
+          formData.append('category', document.getElementById('modelCategory').value);
+          formData.append('tags', document.getElementById('modelTags').value);
+          
+          // Add files
+          Object.keys(uploadedFiles).forEach(fileName => {
+            formData.append(fileName, uploadedFiles[fileName]);
+          });
+          
+          // Make the actual form submission
           const response = await fetch('/dashboard/upload', {
             method: 'POST',
             body: formData
           });
 
-          const result = await response.json();
-          
           if (!response.ok) {
-            throw new Error(result.error || 'Upload failed');
+            const data = await response.json();
+            throw new Error(data.error || 'Upload failed');
           }
 
+          // Show success message if everything worked
           showSuccessMessage();
         } catch (error) {
-          console.error('Error:', error);
-          alert(error.message || 'Failed to upload model. Please try again.');
+          // Show error message to user
+          alert(error.message);
         }
       });
+      
+      async function checkProjectNameAvailability(projectName) {
+        try {
+          const response = await fetch('/check-project-name', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ projectName })
+          });
+
+          if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.error || 'Project name is not available');
+          }
+
+          return true;
+        } catch (error) {
+          throw error;
+        }
+      }
       
       function showSuccessMessage() {
         // Clear the form and file list
