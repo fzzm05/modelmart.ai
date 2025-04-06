@@ -4,37 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - ModelMarket.AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href=".\styles\styles.css">
-  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
 </head>
-<body>
+<body class="bg-gray-50 dark:bg-gray-900">
   <div class="dashboard-container">
     <!-- Navigation Bar -->
     <nav class="dashboard-nav">
       <div class="dashboard-nav-container">
         <div class="dashboard-nav-logo">
-          <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
+          <a href="/" class="no-underline text-inherit">
+            <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
+          </a>
         </div>
         <div class="dashboard-nav-links">
           <a href="#models" class="dashboard-nav-link active">Models</a>
           <a href="/dashboard/uploadmodel" class="dashboard-nav-link">Publish Model</a>
+          <a href="/model-config" class="dashboard-nav-link">Model Config</a>
         </div>
         
-        <!-- New container for search and logout -->
+        <!-- New container for search, user avatar and logout -->
         <div class="dashboard-nav-right" style="display: flex; align-items: center; gap: 20px;">
           <div class="dashboard-search">
             <div class="search-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+              <i data-lucide="search" class="h-5 w-5"></i>
             </div>
             <input type="text" placeholder="Search Models" class="dashboard-search-input" id="modelSearch">
           </div>
+          
           <a href="/profile" class="user-avatar-button" title="View Profile">
             <img src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1" alt="User Profile" class="avatar-image">
           </a>
+          
           <form action="/auth/logout" method="POST">
             <button type="submit" class="button-primary">Logout</button>
           </form>
@@ -54,6 +57,11 @@
   </div>
 
   <script>
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+    
     // Sample model data
     const models = [
       {
@@ -62,7 +70,8 @@
         name: "IBM Data Science",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "/images/The-Stars--stars-draw-1440x900.jpg"
+        image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+        configUrl: "/model-config?id=1"
       },
       {
         id: 2,
@@ -70,7 +79,8 @@
         name: "Deep Learning",
         description: "Specialization",
         courseLink: "Build toward a degree",
-        image: "/images/122555.jpg"
+        image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
+        configUrl: "/model-config?id=2"
       },
       {
         id: 3,
@@ -78,7 +88,8 @@
         name: "IBM AI Engineering",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+        configUrl: "/model-config?id=3"
       },
       {
         id: 4,
@@ -86,7 +97,8 @@
         name: "IBM Generative AI Engineering",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+        configUrl: "/model-config?id=4"
       }
     ];
 
@@ -109,7 +121,10 @@
             <p class="dashboard-model-provider">${model.provider}</p>
             <h3 class="dashboard-model-title">${model.name}</h3>
             <p class="dashboard-model-description">${model.description}</p>
-            <a href="#" class="dashboard-model-link">${model.courseLink}</a>
+            <div class="dashboard-model-actions">
+              <a href="${model.configUrl}" class="dashboard-model-link">Configure</a>
+              <a href="#" class="dashboard-model-link">${model.courseLink}</a>
+            </div>
           </div>
         `;
         
@@ -134,7 +149,5 @@
       document.getElementById('modelSearch').addEventListener('input', renderModelCards);
     });
   </script>
-
-  <script src="script.js"></script>
 </body>
 </html>
