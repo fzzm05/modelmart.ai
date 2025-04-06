@@ -4,32 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
-  <link rel="stylesheet" href="..\..\public\styles\login.css" />
+  <link rel="stylesheet" href="/styles/login.css" />
 </head>
 <body>
   <div class="login-container">
-    <form class="login-box">
-      <input type="text" 
-             placeholder="Full Name"
-             class="input"/>
-      <input type="text" 
-             placeholder="Date of Birth"
-             class="input"/>
+    <form class="login-box" action="/auth/login" method="POST">
       <input type="email" 
              placeholder="Email" 
              class="input"
-             pattern="^[A-Za-z0-9._%+-]+@(gmail\.com|yahoo\.com|yahoo\.in|outlook\.com)$"
+             name="email"
              title="Email must be valid and end with gmail.com, yahoo.com, yahoo.in, or outlook.com"
              required />
       <input type="password" 
              placeholder="password" 
              class="input"
-             pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[.@#_]).{8,}$"
+             name="password"
              title="Password must be at least 8 characters, one number, and one special character (@, #, _)"
              required />
-      <button type="submit" class="login-btn">Sign Up</button>
+      <button type="submit" class="login-btn">LOGIN</button>
       <p class="register-text">
-        <a href="login.html">Already have an account? Log In</a>
+        <a href="/auth/forgot-password">Forgot Password? </a><br>
+        <a href="/auth/signup">Don't have an account? </a>
       </p>
     </form>
   </div>

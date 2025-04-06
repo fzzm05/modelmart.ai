@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - ModelMarket.AI</title>
-  <link rel="stylesheet" href="..\..\public\styles\styles.css">
+  <link rel="stylesheet" href=".\styles\styles.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -18,7 +18,7 @@
         </div>
         <div class="dashboard-nav-links">
           <a href="#models" class="dashboard-nav-link active">Models</a>
-          <a href="upload-model.html" class="dashboard-nav-link">Publish Model</a>
+          <a href="/dashboard/uploadmodel" class="dashboard-nav-link">Publish Model</a>
         </div>
         
         <div class="dashboard-search">
@@ -30,6 +30,10 @@
           </div>
           <input type="text" placeholder="Search Models" class="dashboard-search-input" id="modelSearch">
         </div>
+        
+        <form action="/auth/logout" method="POST" style="margin-top: 20px;">
+          <button type="submit">Logout</button>
+        </form>
       </div>
     </nav>
 
@@ -53,7 +57,7 @@
         name: "IBM Data Science",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "../../public/images/The-Stars--stars-draw-1440x900.jpg"
+        image: "/images/The-Stars--stars-draw-1440x900.jpg"
       },
       {
         id: 2,
@@ -61,7 +65,7 @@
         name: "Deep Learning",
         description: "Specialization",
         courseLink: "Build toward a degree",
-        image: "../../public/images/122555.jpg"
+        image: "/images/122555.jpg"
       },
       {
         id: 3,
@@ -69,7 +73,7 @@
         name: "IBM AI Engineering",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "../../public/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+        image: "/images/Naruto-naruto-3081f23a15-1440x900.jpg"
       },
       {
         id: 4,
@@ -77,7 +81,7 @@
         name: "IBM Generative AI Engineering",
         description: "Professional Certificate",
         courseLink: "Build toward a degree",
-        image: "../../public/images/Naruto-naruto-3081f23a15-1440x900.jpg"
+        image: "/images/Naruto-naruto-3081f23a15-1440x900.jpg"
       }
     ];
 

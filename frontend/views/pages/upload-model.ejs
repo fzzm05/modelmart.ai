@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Model - ModelMarket.AI</title>
-  <link rel="stylesheet" href="..\..\public\styles\styles.css">
+  <link rel="stylesheet" href="\styles\styles.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -210,8 +210,8 @@
             <span class="logo-text">ModelMarket</span><span class="logo-purple">.AI</span>
         </div>
         <div class="dashboard-nav-links">
-          <a href="dashboard.html" class="dashboard-nav-link">Models</a>
-          <a href="upload-model.html" class="dashboard-nav-link active">Publish Model</a>
+          <a href="/dashboard" class="dashboard-nav-link">Models</a>
+          <a href="/dashboard/uploadmodel" class="dashboard-nav-link active">Publish Model</a>
         </div>
       </div>
     </nav>
@@ -248,7 +248,7 @@
           <!-- Files will be listed here -->
         </div>
         
-        <form class="model-form" id="modelForm">
+        <form class="model-form" id="modelForm" action="/dashboard/uploadmodel" method="POST">
           <div class="form-group">
             <label for="modelName" class="form-label">Model Name*</label>
             <input type="text" id="modelName" class="form-input" required>
