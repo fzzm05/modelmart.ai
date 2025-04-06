@@ -76,6 +76,12 @@ router.post("/signup", async (req, res) => {
             [email, hashedPassword]
         );
 
+        // Add initial 1000 tokens for new user
+        await db.query(
+            'INSERT INTO user_tokens (user_id, balance) VALUES ($1, $2)',
+            [newUser.rows[0].id, 1000]
+        );
+
         // Initialize session
         req.session.userId = newUser.rows[0].id;
         req.session.email = newUser.rows[0].email;

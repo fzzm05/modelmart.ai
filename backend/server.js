@@ -8,6 +8,9 @@ import { fileURLToPath } from "url";
 import homeRoutes from "./routes/homeRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import tokenRoutes from "./routes/tokenRoutes.js";
+import modelRoutes from "./routes/modelRoutes.js"; 
+import modelPageRoutes from "./routes/modelPageRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -44,6 +47,9 @@ app.use(express.json());
 app.use("/", homeRoutes);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/tokens", tokenRoutes);
+app.use("/model", modelRoutes);
+app.use("/models", modelPageRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);
