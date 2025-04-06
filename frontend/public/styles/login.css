@@ -2,13 +2,27 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, blue, white);
+    background: linear-gradient(to bottom, rgb(188, 236, 236), rgb(200, 152, 220));
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
   
+.login-container {
+  position: relative;
+  padding-top: 60px; /* creates space for the heading above the form */
+}
+
+.login-heading {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
   .login-container {
     display: flex;
     justify-content: center;
@@ -56,6 +70,66 @@ body {
     color: #888;
   }
   
+  /* Hide the default date text and controls in WebKit browsers */
+.input[type="date"]::-webkit-datetime-edit,
+.input[type="date"]::-webkit-inner-spin-button,
+.input[type="date"]::-webkit-clear-button {
+  color: transparent;
+}
+
+/* Optionally, if you want to reveal the date text when the field is focused */
+.input[type="date"]:focus::-webkit-datetime-edit {
+  color: initial;
+}
+
+/* Add these rules to your login.css */
+
+/* Wrap your date input in a container */
+.date-container {
+  position: relative;
+  width: 100%; /* Ensures the date input uses full available width */
+}
+
+/* Style the date input as before */
+.date-container .input[type="date"] {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background: #f2f2f2;
+  font-size: 14px;
+  width: 92%;         /* Shorten the input box length */
+  margin: 0 auto;     /* Center the input horizontally within its container */
+}
+
+/* Hide the default date text and controls in WebKit browsers */
+.input[type="date"]::-webkit-datetime-edit,
+.input[type="date"]::-webkit-inner-spin-button,
+.input[type="date"]::-webkit-clear-button {
+  color: transparent;
+}
+
+/* Optionally, show date text on focus */
+.input[type="date"]:focus::-webkit-datetime-edit {
+  color: initial;
+}
+
+/* Custom overlay placeholder styling */
+.date-placeholder {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #635c5c;
+  pointer-events: none;
+  font-size: 14px;
+}
+
+/* Hide the custom placeholder when the input is focused or has a value */
+.date-container .input[type="date"]:focus + .date-placeholder,
+.date-container .input[type="date"]:valid + .date-placeholder {
+  display: none;
+}
+
   .register-text a {
     color: #2e20d3;
     text-decoration: none;
@@ -64,4 +138,3 @@ body {
   .register-text a:hover {
     text-decoration: underline;
   }
-  

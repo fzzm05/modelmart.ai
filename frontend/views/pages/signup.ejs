@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
+  <title>Sign Up - ModelMarket.AI</title>
   <link rel="stylesheet" href="/styles/login.css" />
 </head>
 <body>
   <div class="login-container">
+    <h2 class="login-heading">Sign Up Here!</h2>
     <form class="login-box" action="/auth/signup" method="POST">
       <input type="text" 
              name="fullName"
              placeholder="Full Name"
              class="input" required />
-      <input type="text" 
-             name="dateOfBirth"
-             placeholder="Date of Birth"
-             class="input" required />
+      <div class="date-container">
+        <input type="date" 
+               name="dateOfBirth"
+               class="input"
+               required />
+        <span class="date-placeholder">Date of Birth</span>
+      </div>
       <input type="email" 
              name="email"
              placeholder="Email" 

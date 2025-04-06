@@ -5,9 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
   <link rel="stylesheet" href="/styles/login.css" />
+  <!-- Include Font Awesome for the eye icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Optional inline CSS - consider moving to your login.css file */
+    .password-container {
+      position: relative;
+      display: block;
+    }
+    .password-container .input {
+      padding-right: 40px; /* extra space for eye icon */
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #999;
+    }
+    .google-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #444;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .google-login-btn svg {
+      margin-right: 8px;
+    }
+    .login-heading {
+      text-align: center;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
   <div class="login-container">
+    <h2 class="login-heading">Login to your account.</h2>
     <form class="login-box" action="/auth/login" method="POST">
       <input type="email" 
              placeholder="Email" 
@@ -15,18 +58,54 @@
              name="email"
              title="Email must be valid and end with gmail.com, yahoo.com, yahoo.in, or outlook.com"
              required />
-      <input type="password" 
-             placeholder="password" 
-             class="input"
-             name="password"
-             title="Password must be at least 8 characters, one number, and one special character (@, #, _)"
-             required />
+      <div class="password-container">
+        <input type="password" 
+               id="password"
+               placeholder="Password" 
+               class="input"
+               name="password"
+               title="Password must be at least 8 characters, one number, and one special character (@, #, _, or .)"
+               required />
+        <span class="toggle-password" onclick="togglePassword()">
+          <i class="fa fa-eye"></i>
+        </span>
+      </div>
       <button type="submit" class="login-btn">LOGIN</button>
+      
+      <!-- Continue with Google option -->
+      <a href="/auth/google" class="google-login-btn">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.8 0 6.9 1.5 9 2.8l6.6-6.6C35.2 3.7 30 2 24 2c-6.8 0-12.8 3-16.8 7.9l7.8 6c2.1-2.1 4.9-3.2 8-3.2z"/>
+          <path fill="#4285F4" d="M46.5 24.5c0-1.9-0.2-3.7-0.7-5.4H24v10.2h12.7c-0.6 3.4-2.4 6.3-5.2 8.3l7.8 6c4.5-4.2 7.1-10.5 7.1-19.1z"/>
+          <path fill="#FBBC05" d="M10.8 28.9c-1.2-3.5-1.2-7.2 0-10.7l-7.8-6C1.1 18.2 0 21.9 0 25.5s1.1 7.3 3 9.2l7.8-6z"/>
+          <path fill="#34A853" d="M24 47c6.5 0 11.9-2.1 15.9-5.8l-7.8-6c-2.1 1.5-4.8 2.4-8.1 2.4-6.2 0-11.5-4.2-13.4-9.9l-7.8 6c4 8.6 12.1 14.3 21.2 14.3z"/>
+          <path fill="none" d="M0 0h48v48H0z"/>
+        </svg>
+        Continue with Google
+      </a>
+      
       <p class="register-text">
         <a href="/auth/forgot-password">Forgot Password? </a><br>
         <a href="/auth/signup">Don't have an account? </a>
       </p>
     </form>
   </div>
+  
+  <script>
+    function togglePassword() {
+      var passwordField = document.getElementById("password");
+      var icon = document.querySelector(".toggle-password i");
+      
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+  </script>
 </body>
 </html>
