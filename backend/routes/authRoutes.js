@@ -66,7 +66,7 @@ router.post("/signup", async (req, res) => {
         );
 
         if (existingUser.rows.length > 0) {
-            return res.status(400).json({ error: 'Email already registered' });
+            return res.status(400).json({ error: 'Email already registered, please go back and login' });
         }
 
         // Hash password and create user
@@ -78,8 +78,8 @@ router.post("/signup", async (req, res) => {
 
         // Add initial 1000 tokens for new user
         await db.query(
-            'INSERT INTO user_tokens (user_id, balance) VALUES ($1, $2)',
-            [newUser.rows[0].id, 1000]
+            'UPDATE users SET token_balance = $1 WHERE email = $2',
+            [100, email]
         );
 
         // Initialize session
