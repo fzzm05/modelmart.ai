@@ -11,6 +11,7 @@ import dashboardRoutes from "./routes/dashboardRoutes.js";
 import tokenRoutes from "./routes/tokenRoutes.js";
 import modelRoutes from "./routes/modelRoutes.js"; 
 import modelPageRoutes from "./routes/modelPageRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -50,6 +51,7 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/tokens", tokenRoutes);
 app.use("/model", modelRoutes);
 app.use("/models", modelPageRoutes);
+app.use("/profile", profileRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port}`);

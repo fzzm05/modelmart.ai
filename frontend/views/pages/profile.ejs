@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - modelmarket.ai</title>
+  <title>Dashboard - ModelMarket.AI</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href=".\styles\styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -46,12 +46,41 @@
 
     <!-- Main Content -->
     <main class="dashboard-main">
-      <h1 class="dashboard-title">Your Popular Uploaded Models</h1>
+      <h1 class="dashboard-title">Your Uploaded Models</h1>
       
-      <!-- Models Grid -->
-      <div class="dashboard-models-grid" id="modelsGrid">
-        <!-- Model cards will be dynamically populated here -->
-      </div>
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error-message">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <% if (!hasModels) { %>
+        <div class="empty-state">
+          <h2>No Models Yet</h2>
+          <p>You haven't uploaded any models yet. Start by publishing your first model!</p>
+          <a href="/dashboard/uploadmodel" class="button-primary">Upload Your First Model</a>
+        </div>
+      <% } else { %>
+        <!-- Models Grid -->
+        <div class="dashboard-models-grid" id="modelsGrid">
+          <% models.forEach(model => { %>
+            <div class="dashboard-model-card">
+              <div class="dashboard-model-image">
+                <img src="<%= model.image_url || 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1' %>" alt="<%= model.name %>">
+              </div>
+              <div class="dashboard-model-content">
+                <p class="dashboard-model-provider"><%= model.user_id || 'Custom Model' %></p>
+                <h3 class="dashboard-model-title"><%= model.model_name %></h3>
+                <p class="dashboard-model-description"><%= model.description || 'No description available' %></p>
+                <div class="dashboard-model-actions">
+                  <a href="/model/<%= model.id %>" class="dashboard-model-link">View Details</a>
+                  <a href="/model/<%= model.id %>/edit" class="dashboard-model-link">Edit</a>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
     </main>
   </div>
 
@@ -61,92 +90,25 @@
       lucide.createIcons();
     });
     
-    // Sample model data
-    const models = [
-      {
-        id: 1,
-        provider: "IBM",
-        name: "IBM Data Science",
-        description: "Professional Certificate",
-        courseLink: "Build toward a degree",
-        image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
-        configUrl: "/model-config?id=1"
-      },
-      {
-        id: 2,
-        provider: "DeepLearning.AI",
-        name: "Deep Learning",
-        description: "Specialization",
-        courseLink: "Build toward a degree",
-        image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
-        configUrl: "/model-config?id=2"
-      },
-      {
-        id: 3,
-        provider: "IBM",
-        name: "IBM AI Engineering",
-        description: "Professional Certificate",
-        courseLink: "Build toward a degree",
-        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
-        configUrl: "/model-config?id=3"
-      },
-      {
-        id: 4,
-        provider: "IBM",
-        name: "IBM Generative AI Engineering",
-        description: "Professional Certificate",
-        courseLink: "Build toward a degree",
-        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
-        configUrl: "/model-config?id=4"
-      }
-    ];
-
-    // Render model cards
-    function renderModelCards() {
-      const grid = document.getElementById('modelsGrid');
-      grid.innerHTML = '';
-
-      const filteredModels = filterModels();
-      
-      filteredModels.forEach(model => {
-        const card = document.createElement('div');
-        card.className = 'dashboard-model-card';
-        
-        card.innerHTML = `
-          <div class="dashboard-model-image">
-            <img src="${model.image}" alt="${model.name}">
-          </div>
-          <div class="dashboard-model-content">
-            <p class="dashboard-model-provider">${model.provider}</p>
-            <h3 class="dashboard-model-title">${model.name}</h3>
-            <p class="dashboard-model-description">${model.description}</p>
-            <div class="dashboard-model-actions">
-              <a href="${model.configUrl}" class="dashboard-model-link">Configure</a>
-              <a href="#" class="dashboard-model-link">${model.courseLink}</a>
-            </div>
-          </div>
-        `;
-        
-        grid.appendChild(card);
-      });
-    }
-
     // Filter models based on search input
     function filterModels() {
       const searchTerm = document.getElementById('modelSearch').value.toLowerCase();
-      return models.filter(model => 
-        model.name.toLowerCase().includes(searchTerm) ||
-        model.provider.toLowerCase().includes(searchTerm)
-      );
+      const modelCards = document.querySelectorAll('.dashboard-model-card');
+      
+      modelCards.forEach(card => {
+        const title = card.querySelector('.dashboard-model-title').textContent.toLowerCase();
+        const provider = card.querySelector('.dashboard-model-provider').textContent.toLowerCase();
+        
+        if (title.includes(searchTerm) || provider.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     }
 
-    // Initialize the dashboard
-    document.addEventListener('DOMContentLoaded', () => {
-      renderModelCards();
-      
-      // Add search functionality
-      document.getElementById('modelSearch').addEventListener('input', renderModelCards);
-    });
+    // Add search functionality
+    document.getElementById('modelSearch').addEventListener('input', filterModels);
   </script>
 </body>
 </html>

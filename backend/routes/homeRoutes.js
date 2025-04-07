@@ -7,8 +7,5 @@ router.get("/", (req, res) => {
     res.render("landing");
 });
 
-router.get("/profile", isAuthenticated, (req, res) => {
-    res.render("profile");
-});
 
 export default router;

@@ -10,16 +10,16 @@ const __dirname = path.dirname(__filename);
 // Function to create a unique upload directory based on user ID
 const createUploadDir = (req, file) => {
     const userId = req.session ? req.session.userId : null; // Ensure userId is defined
-    const projectName = req.body.projectName; // Get the project name from the request body
+    const modelName = req.body.modelName; // Get the model name from the request body
 
     if (!userId) {
         throw new Error('User not authenticated');
     }
-    if (!projectName) {
-        throw new Error('Project name is required');
+    if (!modelName) {
+        throw new Error('Model name is required');
     }
 
-    const userDir = path.join(__dirname, '../uploads', `${userId}-${projectName}`); // Use the project name in the directory
+    const userDir = path.join(__dirname, '../uploads', `${userId}-${modelName}`); // Use the model name in the directory
     // Create the directory if it doesn't exist
     if (!fs.existsSync(userDir)) {
         fs.mkdirSync(userDir, { recursive: true });
@@ -53,6 +53,9 @@ const fileFilter = (req, file, cb) => {
     if (file.fieldname === 'requirements' && !file.originalname.endsWith('.txt')) {
         return cb(new Error('Only .txt files are allowed for requirements'), false);
     }
+    if (file.fieldname === 'readme' && !file.originalname.endsWith('.md')) {
+        return cb(new Error('Only .md files are allowed for readme'), false);
+    }
     cb(null, true); // Accept the file
 };
 
@@ -63,7 +66,8 @@ const upload = multer({
 }).fields([
     { name: 'model', maxCount: 1 },
     { name: 'app', maxCount: 1 },
-    { name: 'requirements', maxCount: 1 } // Add requirements field
+    { name: 'requirements', maxCount: 1 }, // Add requirements field
+    { name: 'readme', maxCount: 1 } // Add readme field
 ]);
 
 export default upload;
